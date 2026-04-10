@@ -1,0 +1,29 @@
+name: Build Rules
+
+permissions:
+  contents: write
+
+on:
+  schedule:
+    - cron: "0 23 * * *" # 7:00 AM UTC+8
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+
+      - name: Build
+        run: bash build.sh
+
+      - name: Publish dist
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout --orphan dist
+          git rm -rf . || true
+          git add *.mrs *.list
+          git commit -m "update $(TZ='Asia/Shanghai' date '+%F %T')"
+          git push origin dist --force
