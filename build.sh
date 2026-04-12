@@ -47,6 +47,11 @@ ASNLIST=(
   "AS976"     # CoreNET
   "AS132839"  # POWER LINE
   "AS62468"   # VpsQuan
+  "AS8075"    # Azure
+  "AS396982"  # GCP
+  "AS16509"   # AWS
+  "AS398810"  # MXroute
+  "AS13238"   # Yandex
 )
 
 echo ">>> download DOMAIN"
