@@ -52,6 +52,7 @@ ASNLIST=(
   "AS16509"   # AWS
   "AS398810"  # MXroute
   "AS13238"   # Yandex
+  "AS42960"   # VH Global Limited
 )
 
 echo ">>> download DOMAIN"
