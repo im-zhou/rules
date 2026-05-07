@@ -98,11 +98,21 @@ for site in "${DOMAIN_URLS[@]}"; do
   echo >> domain_group.list
 done
 
-echo ">>> download IPCIDR"
+# ASN From GeoIP
+mkdir -p meta-rule/asn
+wget -O ./convert/GeoLite2-ASN.mmdb https://raw.githubusercontent.com/Loyalsoldier/geoip/release/GeoLite2-ASN.mmdb
+go run -C convert/ ./ asn -o ../meta-rule/asn
+
+echo ">>> import IPCIDR from local files"
 > ipcidr_group.list
 for asn in "${ASNLIST[@]}"; do
-  curl -L --retry 3 --connect-timeout 10 "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/asn/$asn.list" >> ipcidr_group.list
-  echo >> ipcidr_group.list
+  file="meta-rule/asn/${asn}.list"
+  if [ -f "$file" ]; then
+    cat "$file" >> ipcidr_group.list
+    echo >> ipcidr_group.list
+  else
+    echo "[WARN] missing file: $file" >&2
+  fi
 done
 
 echo ">>> dedupe"
