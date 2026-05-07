@@ -1,10 +1,46 @@
 #!/usr/bin/env bash
-set -e
+set -euo pipefail
 
-VERSION=$(curl -s https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | grep tag_name | cut -d '"' -f4)
-echo "Using mihomo $VERSION"
-wget -O - https://github.com/MetaCubeX/mihomo/releases/download/${VERSION}/mihomo-linux-amd64-v1-${VERSION}.gz | gunzip > mihomo
-chmod +x mihomo
+# VERSION=$(curl -s https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | grep tag_name | cut -d '"' -f4)
+# echo "Using mihomo $VERSION"
+# wget -O - https://github.com/MetaCubeX/mihomo/releases/download/${VERSION}/mihomo-linux-amd64-v1-${VERSION}.gz | gunzip > mihomo
+# chmod +x mihomo
+
+download_mihomo() {
+    local max_retries="${1:-5}"
+    local retry_delay="${2:-3}"
+    local version
+    local i
+    get_version() {
+        curl -fsSL https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | grep tag_name | cut -d '"' -f4
+    }
+    do_download() {
+        local ver="$1"
+        wget -qO - "https://github.com/MetaCubeX/mihomo/releases/download/${ver}/mihomo-linux-amd64-v1-${ver}.gz" | gunzip > mihomo
+    }
+    for ((i=1; i<=max_retries; i++)); do
+        echo "[$i/$max_retries] Fetching latest mihomo version..."
+        version="$(get_version || true)"
+        if [[ -z "${version}" ]]; then
+            echo "Failed to get version, retrying in ${retry_delay}s..."
+            sleep "${retry_delay}"
+            continue
+        fi
+        echo "Using mihomo ${version}"
+        if do_download "${version}"; then
+            chmod +x mihomo
+            echo "mihomo downloaded successfully"
+            return 0
+        fi
+        echo "Download failed, retrying in ${retry_delay}s..."
+        rm -f mihomo
+        sleep "${retry_delay}"
+    done
+    echo "Failed to download mihomo after ${max_retries} attempts"
+    return 1
+}
+
+download_mihomo
 
 # https://github.com/MetaCubeX/meta-rules-dat/tree/meta
 
