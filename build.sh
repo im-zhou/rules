@@ -40,8 +40,6 @@ download_mihomo() {
     return 1
 }
 
-download_mihomo
-
 # https://github.com/MetaCubeX/meta-rules-dat/tree/meta
 
 DOMAIN_URLS=(
@@ -91,37 +89,39 @@ ASNLIST=(
   "AS42960"   # VH Global Limited
 )
 
-echo ">>> download DOMAIN"
+echo "Step: Download mihomo"
+download_mihomo
+
+echo "Step: Merge DomainList"
 > domain_group.list
 for site in "${DOMAIN_URLS[@]}"; do
-  curl -L --retry 3 --connect-timeout 10 "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/$site.list" >> domain_group.list
+  curl -sL --retry 3 --connect-timeout 10 "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/$site.list" >> domain_group.list
   echo >> domain_group.list
 done
 
-# ASN From GeoIP
-mkdir -p meta-rule/asn
-wget -O ./convert/GeoLite2-ASN.mmdb https://raw.githubusercontent.com/Loyalsoldier/geoip/release/GeoLite2-ASN.mmdb
-go run -C convert/ ./ asn -o ../meta-rule/asn
+echo "Step: Build ASN from GeoLite2-ASN"
+mkdir -p dist/meta/asn
+wget -qO ./convert/GeoLite2-ASN.mmdb https://raw.githubusercontent.com/Loyalsoldier/geoip/release/GeoLite2-ASN.mmdb
+go run -C convert/ ./ asn -o ../dist/meta/asn
 
-echo ">>> import IPCIDR from local files"
+echo "Step: Merge ASNList"
 > ipcidr_group.list
 for asn in "${ASNLIST[@]}"; do
-  file="meta-rule/asn/${asn}.list"
+  file="dist/meta/asn/${asn}.list"
   if [ -f "$file" ]; then
     cat "$file" >> ipcidr_group.list
     echo >> ipcidr_group.list
   else
-    echo "[WARN] missing file: $file" >&2
+    echo "[WARN] missing ASN file: $file" >&2
   fi
 done
 
-echo ">>> dedupe"
-sort -u domain_group.list -o domain_group.list
-sort -u ipcidr_group.list -o ipcidr_group.list
+echo "Step: dedupe"
+sort -u domain_group.list -o dist/domain_group.list
+sort -u ipcidr_group.list -o dist/ipcidr_group.list
 
-echo ">>> convert"
+echo "Step: convert to mrs"
+./mihomo convert-ruleset domain text dist/domain_group.list dist/domain_group.mrs
+./mihomo convert-ruleset ipcidr text dist/ipcidr_group.list dist/ipcidr_group.mrs
 
-./mihomo convert-ruleset domain text domain_group.list domain_group.mrs
-./mihomo convert-ruleset ipcidr text ipcidr_group.list ipcidr_group.mrs
-
-echo "done"
+echo "==== ALL DONE ===="
