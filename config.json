@@ -5,7 +5,7 @@
       "action": "add",
       "args": {
         "name": "oracle",
-        "uri": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/asn/AS31898.list"
+        "uri": "https://raw.githubusercontent.com/im-zhou/rules/refs/heads/dist/meta/asn/AS31898.list"
       }
     },
     {
@@ -13,7 +13,7 @@
       "action": "add",
       "args": {
         "name": "rfchost",
-        "uri": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/asn/AS400618.list"
+        "uri": "https://raw.githubusercontent.com/im-zhou/rules/refs/heads/dist/meta/asn/AS400618.list"
       }
     },
     {
