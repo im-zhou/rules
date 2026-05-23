@@ -15,6 +15,14 @@
         "name": "rfchost",
         "uri": "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/asn/AS400618.list"
       }
+    },
+    {
+      "type": "text",
+      "action": "add",
+      "args": {
+        "name": "hawaiiantelcom",
+        "uri": "https://raw.githubusercontent.com/im-zhou/rules/refs/heads/dist/meta/asn/AS36149.list"
+      }
     }
   ],
   "output": [
