@@ -1,13 +1,3 @@
-#### install:
-```bash
-go install -v github.com/Loyalsoldier/geoip@latest
-```
-
-#### convert:
-```bash
-geoip convert
-```
-
 #### use:
 ```json
 {

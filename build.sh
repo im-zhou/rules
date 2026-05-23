@@ -126,4 +126,53 @@ echo "Step: convert to mrs"
 ./mihomo convert-ruleset domain text dist/domain_group.list dist/domain_group.mrs
 ./mihomo convert-ruleset ipcidr text dist/ipcidr_group.list dist/ipcidr_group.mrs
 
+echo ">>> generate geoip.json"
+cat > geoip.json <<EOF
+{
+  "input": [
+EOF
+FIRST=1
+#
+# ASN -> DAT 分集
+#
+for asn in "${ASNLIST[@]}"; do
+  FILE="dist/meta/asn/${asn}.list"
+  [ -f "$FILE" ] || continue
+  NAME=$(echo "$asn" | tr '[:upper:]' '[:lower:]')
+  if [ $FIRST -eq 0 ]; then
+    echo "," >> geoip.json
+  fi
+  FIRST=0
+  cat >> geoip.json <<EOF
+{
+  "type": "text",
+  "action": "add",
+  "args": {
+    "name": "$NAME",
+    "uri": "$FILE"
+  }
+}
+EOF
+done
+
+cat >> geoip.json <<EOF
+  ],
+  "output": [
+    {
+      "type": "v2rayGeoIPDat",
+      "action": "output",
+      "args": {
+        "outputDir": "./dist",
+        "outputName": "ipcidr_group.dat"
+      }
+    }
+  ]
+}
+EOF
+
+go install -v github.com/Loyalsoldier/geoip@latest
+echo ">>> build"
+
+geoip convert -c geoip.json
+
 echo "==== ALL DONE ===="
