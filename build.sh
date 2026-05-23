@@ -87,6 +87,7 @@ ASNLIST=(
   "AS398810"  # MXroute
   "AS13238"   # Yandex
   "AS42960"   # VH Global Limited
+  "AS36352"   # HostPapa(CCS)
 )
 
 echo "Step: Download mihomo"
