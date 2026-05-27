@@ -89,6 +89,7 @@ ASNLIST=(
   "AS42960"   # VH Global Limited
   "AS36352"   # HostPapa(CCS)
   "AS36149"   # Hawaiian Telcom
+  "AS61112"   # AKILE
 )
 
 echo "Step: Download mihomo"
