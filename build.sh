@@ -42,6 +42,13 @@ download_mihomo() {
 
 # https://github.com/MetaCubeX/meta-rules-dat/tree/meta
 
+FUNNY_LIST=(
+  "netease"
+  "tencent"
+  "douyin"
+  "bilibili"
+)
+
 DOMAIN_URLS=(
   "oracle"
   "azure"
@@ -102,6 +109,13 @@ for site in "${DOMAIN_URLS[@]}"; do
   echo >> domain_group.list
 done
 
+echo "Step: Merge FUNNY_LIST"
+> domain_funny.list
+for site in "${FUNNY_LIST[@]}"; do
+  curl -sL --retry 3 --connect-timeout 10 "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/$site.list" >> domain_funny.list
+  echo >> domain_funny.list
+done
+
 echo "Step: Build ASN from GeoLite2-ASN"
 mkdir -p dist/meta/asn
 wget -qO ./convert/GeoLite2-ASN.mmdb https://raw.githubusercontent.com/Loyalsoldier/geoip/release/GeoLite2-ASN.mmdb
@@ -122,8 +136,10 @@ done
 echo "Step: dedupe"
 sort -u domain_group.list -o dist/domain_group.list
 sort -u ipcidr_group.list -o dist/ipcidr_group.list
+sort -u domain_funny.list -o dist/domain_funny.list
 
 echo "Step: convert to mrs"
+./mihomo convert-ruleset domain text dist/domain_funny.list dist/domain_funny.mrs
 ./mihomo convert-ruleset domain text dist/domain_group.list dist/domain_group.mrs
 ./mihomo convert-ruleset ipcidr text dist/ipcidr_group.list dist/ipcidr_group.mrs
 
