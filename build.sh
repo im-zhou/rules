@@ -47,6 +47,7 @@ FUNNY_LIST=(
   "tencent"
   "douyin"
   "bilibili"
+  "doubao"
 )
 
 DOMAIN_URLS=(
