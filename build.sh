@@ -99,6 +99,7 @@ ASNLIST=(
   "AS36149"   # Hawaiian Telcom
   "AS61112"   # AKILE
   "AS402279"  # Wawo
+  "AS131642"  # PQS
 )
 
 echo "Step: Download mihomo"
