@@ -48,6 +48,7 @@ FUNNY_LIST=(
   "douyin"
   "bilibili"
   "doubao"
+  "iqiyi"
 )
 
 DOMAIN_URLS=(
