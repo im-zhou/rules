@@ -43,6 +43,7 @@ download_mihomo() {
 # https://github.com/MetaCubeX/meta-rules-dat/tree/meta
 
 FUNNY_LIST=(
+  "alibaba"
   "netease"
   "tencent"
   "douyin"
