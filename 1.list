@@ -16,7 +16,7 @@ IP-CIDR,1.0.0.1/32,no-resolve
 IP-CIDR,185.222.222.222/32,no-resolve
 IP-CIDR,208.67.222.222/32,no-resolve
 IP-CIDR,208.67.220.220/32,no-resolve
-IP-CIDR,8.217.11.0/24,no-resolve
+IP-CIDR,8.217.11.0/24
 DOMAIN,bkt-sgp-miui-ota-update-alisgp.oss-ap-southeast-1.aliyuncs.com
 DOMAIN-SUFFIX,ymawv.la
 DOMAIN-SUFFIX,bgp.tools
@@ -24,7 +24,7 @@ DOMAIN-SUFFIX,bgp.gd
 DOMAIN-SUFFIX,ovh.com
 DOMAIN-SUFFIX,ovhcloud.com
 DOMAIN-SUFFIX,uhdnow.com
-IP-CIDR,22.22.22.0/23,no-resolve
+IP-CIDR,22.22.22.0/23
 DOMAIN-SUFFIX,ping0.cc
 DOMAIN-SUFFIX,169bbs3.online
 DOMAIN-SUFFIX,169bbs2.site
