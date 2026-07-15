@@ -80,7 +80,6 @@ ASNLIST=(
   "AS202662"  # Hytron
   "AS151407"  # Hytron
   "AS401434"  # Hytron
-  "AS205880"  # Hytron
   "AS12027"   # Hytron
   "AS16276"   # OVH
   "AS197540"  # Netcup
@@ -105,17 +104,17 @@ ASNLIST=(
 )
 
 echo "Step: Download mihomo"
-download_mihomo
+download_mihomo 5 3
 
 echo "Step: Merge DomainList"
-> domain_group.list
+true > domain_group.list
 for site in "${DOMAIN_URLS[@]}"; do
   curl -sL --retry 3 --connect-timeout 10 "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/$site.list" >> domain_group.list
   echo >> domain_group.list
 done
 
 echo "Step: Merge FUNNY_LIST"
-> domain_funny.list
+true > domain_funny.list
 for site in "${FUNNY_LIST[@]}"; do
   curl -sL --retry 3 --connect-timeout 10 "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/$site.list" >> domain_funny.list
   echo >> domain_funny.list
@@ -127,7 +126,7 @@ wget -qO ./convert/GeoLite2-ASN.mmdb https://raw.githubusercontent.com/Loyalsold
 go run -C convert/ ./ asn -o ../dist/meta/asn
 
 echo "Step: Merge ASNList"
-> ipcidr_group.list
+true > ipcidr_group.list
 for asn in "${ASNLIST[@]}"; do
   file="dist/meta/asn/${asn}.list"
   if [ -f "$file" ]; then
@@ -192,7 +191,7 @@ cat >> geoip.json <<EOF
 }
 EOF
 
-go install -v github.com/Loyalsoldier/geoip@latest
+# go install -v github.com/Loyalsoldier/geoip@latest
 echo ">>> build"
 
 geoip convert -c geoip.json
