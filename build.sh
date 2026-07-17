@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 . ./conf.sh
+. ./eu.sh
 set -euo pipefail
 
 # VERSION=$(curl -s https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | grep tag_name | cut -d '"' -f4)
@@ -46,6 +47,16 @@ download_mihomo() {
 echo "Step: Download mihomo"
 download_mihomo 5 3
 
+echo "Step: Build GeoASN"
+mkdir -p dist/meta/asn
+wget -qO ./convert/GeoLite2-ASN.mmdb https://raw.githubusercontent.com/Loyalsoldier/geoip/release/GeoLite2-ASN.mmdb
+go run -C convert/ ./ asn  -f ./GeoLite2-ASN.mmdb -o ../dist/meta/asn
+
+echo "Step: Build GeoIP"
+mkdir -p dist/meta/geoip
+wget -qO ./convert/geoip.dat https://github.com/Loyalsoldier/geoip/raw/release/geoip.dat
+go run -C convert/ ./ geoip -f ./geoip.dat -o ../dist/meta/geoip
+
 echo "Step: Merge DomainList"
 true > domain_group.list
 for site in "${DOMAIN_URLS[@]}"; do
@@ -59,11 +70,6 @@ for site in "${FUNNY_LIST[@]}"; do
   curl -sL --retry 3 --connect-timeout 10 "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/$site.list" >> domain_funny.list
   echo >> domain_funny.list
 done
-
-echo "Step: Build ASN from GeoLite2-ASN"
-mkdir -p dist/meta/asn
-wget -qO ./convert/GeoLite2-ASN.mmdb https://raw.githubusercontent.com/Loyalsoldier/geoip/release/GeoLite2-ASN.mmdb
-go run -C convert/ ./ asn -o ../dist/meta/asn
 
 echo "Step: Merge ASNList"
 true > ipcidr_group.list
@@ -87,8 +93,9 @@ echo "Step: convert to mrs"
 ./mihomo convert-ruleset domain text dist/domain_group.list dist/domain_group.mrs
 ./mihomo convert-ruleset ipcidr text dist/ipcidr_group.list dist/ipcidr_group.mrs
 
-echo ">>> generate geoip.json"
-cat > geoip.json <<EOF
+function buildGeoASN() {
+echo ">>> generate geoasn.json"
+cat > geoasn.json <<EOF
 {
   "input": [
 EOF
@@ -101,39 +108,84 @@ for asn in "${ASNLIST[@]}"; do
   [ -f "$FILE" ] || continue
   NAME=$(echo "$asn" | tr '[:upper:]' '[:lower:]')
   if [ $FIRST -eq 0 ]; then
-    echo "," >> geoip.json
+    echo "," >> geoasn.json
   fi
   FIRST=0
-  cat >> geoip.json <<EOF
+  cat >> geoasn.json <<EOF
 {
   "type": "text",
   "action": "add",
   "args": {
     "name": "$NAME",
-    "uri": "$FILE"
+    "uri": "../$FILE"
   }
 }
 EOF
 done
-
-cat >> geoip.json <<EOF
+cat >> geoasn.json <<EOF
   ],
   "output": [
     {
       "type": "v2rayGeoIPDat",
       "action": "output",
       "args": {
-        "outputDir": "./dist",
-        "outputName": "ipcidr_group.dat"
+        "outputDir": "../dist",
+        "outputName": "geoasn.dat"
       }
     }
   ]
 }
 EOF
+go run -C geoip ./ convert -c ../geoasn.json
+}
 
-# go install -v github.com/Loyalsoldier/geoip@latest
-echo ">>> build"
+function buildGeoEU() {
+echo ">>> generate geoeu.json"
+cat > geoeu.json <<EOF
+{
+  "input": [
+EOF
+#
+# GeoIP -> DAT 欧洲国家合集
+#
+FIRST=1
+for cc in "${EULIST[@]}"; do
+  FILE="dist/meta/geoip/${cc,,}.list"
+  [ -f "$FILE" ] || continue
+  if [ $FIRST -eq 0 ]; then
+    echo "," >> geoeu.json
+  fi
+  FIRST=0
+  cat >> geoeu.json <<EOF
+{
+  "type": "text",
+  "action": "add",
+  "args": {
+    "name": "eu",
+    "uri": "../$FILE"
+  }
+}
+EOF
+done
+cat >> geoeu.json <<EOF
+  ],
+  "output": [
+    {
+      "type": "v2rayGeoIPDat",
+      "action": "output",
+      "args": {
+        "outputDir": "../dist",
+        "outputName": "geoeu.dat"
+      }
+    }
+  ]
+}
+EOF
+go run -C geoip ./ convert -c ../geoeu.json
+}
 
-geoip convert -c geoip.json
+echo ">>> build GeoDat"
+buildGeoASN
+buildGeoEU
 
 echo "==== ALL DONE ===="

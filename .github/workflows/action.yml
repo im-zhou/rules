@@ -21,9 +21,11 @@ jobs:
           go-version: '1.26'
           cache-dependency-path: ./custom/go.sum
 
-      - name: Loyalsoldier/geoip
-        run: |
-          go install -v github.com/Loyalsoldier/geoip@latest
+      - name: Checkout Loyalsoldier/geoip
+        uses: actions/checkout@v4
+        with:
+          repository: Loyalsoldier/geoip
+          path: geoip
 
       - name: Checkout MetaCubeX/meta-rules-converter
         uses: actions/checkout@v4
