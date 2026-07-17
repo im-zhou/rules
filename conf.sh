@@ -67,4 +67,6 @@ export ASNLIST=(
   "AS61112"   # AKILE
   "AS402279"  # Wawo
   "AS131642"  # PQS
+  "AS137872"  # China Mobile Hong Kong Company Limited
+  "AS9231"  # China Mobile Hong Kong Company Limited
 )
