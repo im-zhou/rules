@@ -33,7 +33,15 @@ export ASNLIST=(
   "AS3491"    # PCCW
   "AS9908"    # iCable
   "AS31898"   # OCI
-  "AS400618"  # RFCHost
+  "AS138997"  # Eons Data Communications Limited
+  "AS8796"    # FASTNET DATA INC
+  "AS400618"  # Prime Security Corp.
+  "AS140096"  # JINX CO., LIMITED
+  "AS140042"  # Zhipinshang (Hongkong) Electron Communication Technology Limited
+  "AS151797"  # CTCSCI TECH LIMITED
+  "AS152111"  # CTCSCI TECH LIMITED
+  "AS152112"  # CTCSCI TECH LIMITED
+  "AS139358"  # Kansuiun Co., Ltd
   "AS17433"   # Hytron
   "AS202662"  # Hytron
   "AS151407"  # Hytron
