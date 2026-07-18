@@ -26,6 +26,12 @@ export ASNLIST=(
   "AS16625"   # Akamai
   "AS32787"   # Akamai
   # END CDN
+  "AS62041"   # TG EU
+  "AS211157"  # TG EU
+  "AS44907"   # TG SG
+  "AS62014"   # TG SG
+  "AS59930"   # TG US
+  # END Telegram
   "AS3462"    # Hinet
   "AS4641"    # HKIX
   "AS9269"    # HKBN
