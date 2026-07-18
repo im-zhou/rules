@@ -1,0 +1,22 @@
+{
+  "input": [
+    {
+      "type": "text",
+      "action": "add",
+      "args": {
+        "name": "lite-ip",
+        "uri": "../lite-ip.list"
+      }
+    }
+  ],
+  "output": [
+    {
+      "type": "v2rayGeoIPDat",
+      "action": "output",
+      "args": {
+        "outputDir": "../dist",
+        "outputName": "lite-ip.dat"
+      }
+    }
+  ]
+}

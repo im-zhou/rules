@@ -33,6 +33,12 @@ jobs:
           repository: MetaCubeX/meta-rules-converter
           path: convert
 
+      - name: Checkout v2fly/domain-list-community
+        uses: actions/checkout@v4
+        with:
+          repository: v2fly/domain-list-community
+          path: community
+
       - name: Build
         run: bash build.sh
 
