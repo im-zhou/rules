@@ -47,6 +47,8 @@ export ASNLIST=(
   "AS151797"  # CTCSCI TECH LIMITED
   "AS152111"  # CTCSCI TECH LIMITED
   "AS152112"  # CTCSCI TECH LIMITED
+  "AS153517"  # Ju Link Tech Limited
+  "AS979"     # NetLab
   "AS139358"  # Kansuiun Co., Ltd
   "AS17433"   # Hytron
   "AS202662"  # Hytron
@@ -74,5 +76,5 @@ export ASNLIST=(
   "AS402279"  # Wawo
   "AS131642"  # PQS
   "AS137872"  # China Mobile Hong Kong Company Limited
-  "AS9231"  # China Mobile Hong Kong Company Limited
+  "AS9231"    # China Mobile Hong Kong Company Limited
 )
