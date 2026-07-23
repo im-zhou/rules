@@ -30,17 +30,36 @@ done
 echo "Step: Merge FUNNY_LIST"
 true > domain_funny.list
 for site in "${FUNNY_LIST[@]}"; do
+  tmp_file=$(mktemp)
   if [[ "$site" == http://* || "$site" == https://* ]]; then
     url="$site"
+    if ! curl -fsSL --retry 3 --connect-timeout 5 "$url" -o "$tmp_file"; then
+      echo "Warning: Download failed, skipped: $url" >&2
+      rm -f "$tmp_file"
+      continue
+    fi
+    grep 'DOMAIN' "$tmp_file" |
+      grep -v '#' |
+      sed \
+        -e 's/^[[:space:]]*-[[:space:]]*DOMAIN,/full:/' \
+        -e 's/^[[:space:]]*-[[:space:]]*DOMAIN-SUFFIX,//' \
+        -e 's/^[[:space:]]*-[[:space:]]*DOMAIN-KEYWORD,/keyword:/' \
+      >> domain_funny.list
   else
     url="https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/${site}.list"
-  fi
-  if ! curl -fsSL --retry 3 --connect-timeout 10 "$url" >> domain_funny.list; then
-    echo "Warning: Download failed, skipped: $url" >&2
-    continue
+    if ! curl -fsSL --retry 3  --connect-timeout 5 "$url" -o "$tmp_file"; then
+      echo "Warning: Download failed, skipped: $url" >&2
+      rm -f "$tmp_file"
+      continue
+    fi
+    cat "$tmp_file" >> domain_funny.list
   fi
   echo >> domain_funny.list
+  rm -f "$tmp_file"
 done
+echo 'stream.qqmusic.qq.com' >> domain_funny.list
+echo 'aqqmusic.tc.qq.com' >> domain_funny.list
+echo 'tencentmusic.com' >> domain_funny.list
 
 echo "Step: Merge ASNList"
 true > ipcidr_group.list
