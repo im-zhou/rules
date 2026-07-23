@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 
 export FUNNY_LIST=(
-  "alibaba"
-  "netease"
-  "tencent"
+  "aliyun"
+  "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/NetEaseMusic/NetEaseMusic.list"
+  "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/TencentVideo/TencentVideo.list"
+  "tencent-tme"
   "douyin"
   "bilibili"
   "doubao"

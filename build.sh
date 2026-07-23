@@ -30,7 +30,15 @@ done
 echo "Step: Merge FUNNY_LIST"
 true > domain_funny.list
 for site in "${FUNNY_LIST[@]}"; do
-  curl -sL --retry 3 --connect-timeout 10 "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/$site.list" >> domain_funny.list
+  if [[ "$site" == http://* || "$site" == https://* ]]; then
+    url="$site"
+  else
+    url="https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/${site}.list"
+  fi
+  if ! curl -fsSL --retry 3 --connect-timeout 10 "$url" >> domain_funny.list; then
+    echo "Warning: Download failed, skipped: $url" >&2
+    continue
+  fi
   echo >> domain_funny.list
 done
 
