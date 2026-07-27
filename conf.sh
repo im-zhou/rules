@@ -78,4 +78,5 @@ export ASNLIST=(
   "AS131642"  # PQS
   "AS137872"  # China Mobile Hong Kong Company Limited
   "AS9231"    # China Mobile Hong Kong Company Limited
+  "AS20473"   # Vultr
 )
