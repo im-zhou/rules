@@ -58,6 +58,7 @@ for site in "${FUNNY_LIST[@]}"; do
   rm -f "$tmp_file"
 done
 echo 'stream.qqmusic.qq.com' >> domain_funny.list
+echo 'wnsmusic.qq.com' >> domain_funny.list
 echo 'aqqmusic.tc.qq.com' >> domain_funny.list
 echo 'tencentmusic.com' >> domain_funny.list
 
