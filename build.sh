@@ -41,9 +41,8 @@ for site in "${FUNNY_LIST[@]}"; do
     grep 'DOMAIN' "$tmp_file" |
       grep -v '#' |
         sed -n \
-          -e 's/^[[:space:]]*-\{0,1\}[[:space:]]*DOMAIN,\([^[:space:],]*\).*$/full:\1/p' \
-          -e 's/^[[:space:]]*-\{0,1\}[[:space:]]*DOMAIN-SUFFIX,\([^[:space:],]*\).*$/\1/p' \
-          -e 's/^[[:space:]]*-\{0,1\}[[:space:]]*DOMAIN-KEYWORD,\([^[:space:],]*\).*$/keyword:\1/p' \
+          -e 's/^[[:space:]]*DOMAIN,\([^,[:space:]]*\).*$/\1/p' \
+          -e 's/^[[:space:]]*DOMAIN-SUFFIX,\([^,[:space:]]*\).*$/+.\1/p' \
       >> domain_funny.list
   else
     url="https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/${site}.list"
