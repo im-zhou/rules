@@ -40,10 +40,10 @@ for site in "${FUNNY_LIST[@]}"; do
     fi
     grep 'DOMAIN' "$tmp_file" |
       grep -v '#' |
-      sed \
-        -e 's/^[[:space:]]*-[[:space:]]*DOMAIN,/full:/' \
-        -e 's/^[[:space:]]*-[[:space:]]*DOMAIN-SUFFIX,//' \
-        -e 's/^[[:space:]]*-[[:space:]]*DOMAIN-KEYWORD,/keyword:/' \
+        sed -n \
+          -e 's/^[[:space:]]*-\{0,1\}[[:space:]]*DOMAIN,\([^[:space:],]*\).*$/full:\1/p' \
+          -e 's/^[[:space:]]*-\{0,1\}[[:space:]]*DOMAIN-SUFFIX,\([^[:space:],]*\).*$/\1/p' \
+          -e 's/^[[:space:]]*-\{0,1\}[[:space:]]*DOMAIN-KEYWORD,\([^[:space:],]*\).*$/keyword:\1/p' \
       >> domain_funny.list
   else
     url="https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/${site}.list"
@@ -60,7 +60,6 @@ done
 echo 'stream.qqmusic.qq.com' >> domain_funny.list
 echo 'wnsmusic.qq.com' >> domain_funny.list
 echo 'aqqmusic.tc.qq.com' >> domain_funny.list
-echo 'tencentmusic.com' >> domain_funny.list
 
 echo "Step: Merge ASNList"
 true > ipcidr_group.list
