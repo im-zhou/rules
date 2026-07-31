@@ -34,6 +34,11 @@ fi
 sed -i 's/192.168.1.1/192.168.105.3/g' package/base-files/files/bin/config_generate
 # 默认 shell 为 bash
 sed -i 's/\/bin\/ash/\/bin\/bash/g' package/base-files/files/etc/passwd
+# 替换ntp服务器
+sed -i 's/0.openwrt.pool.ntp.org/ntp.tencent.com/g' package/base-files/files/bin/config_generate
+sed -i 's/1.openwrt.pool.ntp.org/ntp1.aliyun.com/g' package/base-files/files/bin/config_generate
+sed -i 's/2.openwrt.pool.ntp.org/ntp.ntsc.ac.cn/g' package/base-files/files/bin/config_generate
+sed -i 's/3.openwrt.pool.ntp.org/cn.ntp.org.cn/g' package/base-files/files/bin/config_generate
 # 替换时区
 sed -i "s/timezone='.*'/timezone='CST-8'/g" package/base-files/files/bin/config_generate
 if ! grep -q "zonename=" package/base-files/files/bin/config_generate; then
@@ -41,26 +46,30 @@ if ! grep -q "zonename=" package/base-files/files/bin/config_generate; then
 else
     sed -i "s/zonename='.*'/zonename='Asia\/Shanghai'/g" package/base-files/files/bin/config_generate
 fi
-
-# OpenClash
-rm -rf feeds/luci/applications/luci-app-openclash
-git clone -b master --single-branch --filter=blob:none https://github.com/vernesong/OpenClash.git /tmp/OpenClash
-rm -rf /tmp/OpenClash/luci-app-openclash/root/usr/share/openclash/ui/zashboard
-mkdir -p /tmp/OpenClash/luci-app-openclash/root/usr/share/openclash/ui/zashboard
-curl -L https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip -o /tmp/zashboard.zip
-unzip -o /tmp/zashboard.zip -d /tmp/zashboard
-mv /tmp/zashboard/dist/* /tmp/OpenClash/luci-app-openclash/root/usr/share/openclash/ui/zashboard/
-rm -rf /tmp/zashboard /tmp/zashboard.zip
-mv /tmp/OpenClash/luci-app-openclash feeds/luci/applications/luci-app-openclash
-rm -rf /tmp/OpenClash
-mkdir -p package/base-files/files/etc/openclash/core/
-curl -L https://raw.githubusercontent.com/vernesong/OpenClash/core/master/meta/clash-linux-amd64.tar.gz | tar -xz -C /tmp
-mv /tmp/clash package/base-files/files/etc/openclash/core/clash_meta
-chmod 0755 package/base-files/files/etc/openclash/core/clash_meta
-
 echo "# Defaults are configured in /etc/sysctl.d/* and can be customized in this file" > package/base-files/files/etc/sysctl.conf
 echo "net.core.rmem_max=524288" >> package/base-files/files/etc/sysctl.conf
 sed -i '$a net.netfilter.nf_conntrack_max=65535' package/base-files/files/etc/sysctl.conf
+
+# OpenClash
+tmp_openclash="$(mktemp -d)"
+trap 'rm -rf -- "$tmp_openclash"' EXIT
+git clone -b master --single-branch --filter=blob:none https://github.com/vernesong/OpenClash.git "$tmp_openclash/OpenClash"
+zashboard_dir="$tmp_openclash/OpenClash/luci-app-openclash/root/usr/share/openclash/ui/zashboard"
+rm -rf -- "$zashboard_dir"
+mkdir -p "$zashboard_dir"
+curl -fL https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip -o "$tmp_openclash/zashboard.zip"
+unzip -oq "$tmp_openclash/zashboard.zip" -d "$tmp_openclash/zashboard"
+cp -a "$tmp_openclash/zashboard/dist/." "$zashboard_dir/"
+rm -rf -- feeds/luci/applications/luci-app-openclash
+mkdir -p feeds/luci/applications
+mv "$tmp_openclash/OpenClash/luci-app-openclash" feeds/luci/applications/luci-app-openclash
+core_dir="package/base-files/files/etc/openclash/core"
+mkdir -p "$core_dir"
+curl -fL https://raw.githubusercontent.com/vernesong/OpenClash/core/master/meta/clash-linux-amd64.tar.gz -o "$tmp_openclash/clash-linux-amd64.tar.gz"
+tar -xzf "$tmp_openclash/clash-linux-amd64.tar.gz" -C "$tmp_openclash"
+install -m 0755 "$tmp_openclash/clash" "$core_dir/clash_meta"
+rm -rf -- "$tmp_openclash"
+trap - EXIT
 
 cp ../x86op.toml .config
 make defconfig
