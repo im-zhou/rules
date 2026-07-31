@@ -56,10 +56,10 @@ for site in "${FUNNY_LIST[@]}"; do
   echo >> domain_funny.list
   rm -f "$tmp_file"
 done
-echo 'stream.qqmusic.qq.com' >> domain_funny.list
-echo 'wnsmusic.qq.com' >> domain_funny.list
-echo 'aqqmusic.tc.qq.com' >> domain_funny.list
-echo 'imgcache.qq.com' >> domain_funny.list
+echo '+.qqmusic.qq.com' >> domain_funny.list
+echo '+.wnsmusic.qq.com' >> domain_funny.list
+echo '+.aqqmusic.tc.qq.com' >> domain_funny.list
+echo '+.imgcache.qq.com' >> domain_funny.list
 
 echo "Step: Merge ASNList"
 true > ipcidr_group.list
