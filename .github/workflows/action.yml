@@ -2,6 +2,7 @@ name: Build Rules
 
 permissions:
   contents: write
+  actions: write
 
 on:
   schedule:
@@ -14,6 +15,24 @@ jobs:
     steps:
       - name: Checkout main
         uses: actions/checkout@v4
+
+      - name: 删除历史运行记录
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh run list \
+            --workflow "${{ github.workflow }}" \
+            --status completed \
+            --limit 1000 \
+            --json databaseId \
+            --jq '.[].databaseId' |
+          while read -r run_id; do
+            echo "删除历史运行: $run_id"
+            gh api \
+              --method DELETE \
+              "repos/${{ github.repository }}/actions/runs/$run_id"
+          done
 
       - name: Setup Go
         uses: actions/setup-go@v5
