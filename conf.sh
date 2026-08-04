@@ -9,6 +9,7 @@ export FUNNY_LIST=(
   "bilibili"
   "doubao"
   "iqiyi"
+  "jianshu"
 )
 
 export DOMAIN_URLS=(
