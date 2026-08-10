@@ -50,28 +50,10 @@ echo "# Defaults are configured in /etc/sysctl.d/* and can be customized in this
 echo "net.core.rmem_max=524288" >> package/base-files/files/etc/sysctl.conf
 sed -i '$a net.netfilter.nf_conntrack_max=65535' package/base-files/files/etc/sysctl.conf
 
-# OpenClash
-tmp_openclash="$(mktemp -d)"
-trap 'rm -rf -- "$tmp_openclash"' EXIT
-git clone -b master --single-branch --filter=blob:none https://github.com/vernesong/OpenClash.git "$tmp_openclash/OpenClash"
-zashboard_dir="$tmp_openclash/OpenClash/luci-app-openclash/root/usr/share/openclash/ui/zashboard"
-rm -rf -- "$zashboard_dir"
-mkdir -p "$zashboard_dir"
-curl -fL https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip -o "$tmp_openclash/zashboard.zip"
-unzip -oq "$tmp_openclash/zashboard.zip" -d "$tmp_openclash/zashboard"
-cp -a "$tmp_openclash/zashboard/dist/." "$zashboard_dir/"
-rm -rf -- feeds/luci/applications/luci-app-openclash
-mkdir -p feeds/luci/applications
-mv "$tmp_openclash/OpenClash/luci-app-openclash" feeds/luci/applications/luci-app-openclash
-core_dir="package/base-files/files/etc/openclash/core"
-mkdir -p "$core_dir"
-curl -fL https://raw.githubusercontent.com/vernesong/OpenClash/core/master/meta/clash-linux-amd64.tar.gz -o "$tmp_openclash/clash-linux-amd64.tar.gz"
-tar -xzf "$tmp_openclash/clash-linux-amd64.tar.gz" -C "$tmp_openclash"
-install -m 0755 "$tmp_openclash/clash" "$core_dir/clash_meta"
-rm -rf -- "$tmp_openclash"
-trap - EXIT
-
 cp ../x86op.toml .config
+# OpenClash
+bash ../update_openclash.sh
+
 make defconfig
 env FORCE_UNSAFE_CONFIGURE=1 make download -j8
 env FORCE_UNSAFE_CONFIGURE=1 make -j$(nproc)
