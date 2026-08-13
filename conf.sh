@@ -36,6 +36,7 @@ export ASNLIST=(
   "AS59930"   # TG US
   # END Telegram
   "AS3462"    # Hinet
+  "AS4780"    # Seednet
   "AS4641"    # HKIX
   "AS9269"    # HKBN
   "AS4760"    # HKT
