@@ -70,7 +70,7 @@ echo "net.core.rmem_max=524288" >> package/base-files/files/etc/sysctl.conf
 sed -i '$a net.netfilter.nf_conntrack_max=65535' package/base-files/files/etc/sysctl.conf
 
 # main
-cp ../h29k.toml .config
+cp ../h29k.kconfig .config
 # OpenClash
 bash ../update_openclash.sh
 

@@ -50,7 +50,7 @@ echo "# Defaults are configured in /etc/sysctl.d/* and can be customized in this
 echo "net.core.rmem_max=524288" >> package/base-files/files/etc/sysctl.conf
 sed -i '$a net.netfilter.nf_conntrack_max=65535' package/base-files/files/etc/sysctl.conf
 
-cp ../x86op.toml .config
+cp ../x86op.kconfig .config
 # OpenClash
 bash ../update_openclash.sh
 

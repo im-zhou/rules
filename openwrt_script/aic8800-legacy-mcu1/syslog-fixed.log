@@ -1,0 +1,118 @@
+[Mon Aug 17 14:54:57 2026] usb 1-1.4: USB disconnect, device number 3
+[Mon Aug 17 14:54:59 2026] usb 1-1.4: new high-speed USB device number 4 using xhci_hcd
+[Mon Aug 17 14:54:59 2026] usb 1-1.4: New USB device found, idVendor=a69c, idProduct=8d80, bcdDevice= 1.00
+[Mon Aug 17 14:54:59 2026] usb 1-1.4: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+[Mon Aug 17 14:54:59 2026] usb 1-1.4: Product: AIC Wlan
+[Mon Aug 17 14:54:59 2026] usb 1-1.4: Manufacturer: aicsemi
+[Mon Aug 17 14:54:59 2026] usb 1-1.4: SerialNumber: 20220103
+[Mon Aug 17 14:54:59 2026] AICWFDBG(LOGINFO)	aicwf_usb_probe vid:0xA69C pid:0x8D80 icl:0x0 isc:0x0 ipr:0x0
+[Mon Aug 17 14:54:59 2026] AICWFDBG(LOGINFO)	aicloadfw_chipmatch USE AIC8800D80
+[Mon Aug 17 14:54:59 2026] Aic high speed USB device detected
+[Mon Aug 17 14:54:59 2026] chip_id=7, chip_mcu_id = 1
+[Mon Aug 17 14:54:59 2026] AIC8800D80 legacy: using Radxa SDK V3 loader profile
+[Mon Aug 17 14:54:59 2026] AIC8800D80 MCU1: enabled Bluetooth cache fix
+[Mon Aug 17 14:54:59 2026] aic_load_firmware :firmware path = /lib/firmware/aic8800/usb/fw_patch_table_8800d80_u02.bin
+[Mon Aug 17 14:54:59 2026] file md5:fefcc62cfc31d0eaab2a9bffc61e03ac
+[Mon Aug 17 14:54:59 2026] ### Upload fw_patch_table_8800d80_u02.bin fw_patch_table, size=984
+[Mon Aug 17 14:54:59 2026] AICWFDBG(LOGDEBUG)	aicbt_patch_info_unpack head_t->len:4 base_len:4
+[Mon Aug 17 14:54:59 2026] AICWFDBG(LOGDEBUG)	aicbt_patch_info_unpack memcpy_len:4
+[Mon Aug 17 14:54:59 2026] AICWFDBG(LOGDEBUG)	aicbt_patch_info_unpack adid_addrinf:1e601c addr_adid:201940
+[Mon Aug 17 14:54:59 2026] addr_adid 0x201940, addr_patch 0x1e0000
+[Mon Aug 17 14:54:59 2026] aic_load_firmware :firmware path = /lib/firmware/aic8800/usb/fw_adid_8800d80_u02.bin
+[Mon Aug 17 14:54:59 2026] file md5:f546881a81b960d89a672578eb45a809
+[Mon Aug 17 14:54:59 2026] ### Upload fw_adid_8800d80_u02.bin firmware, @ = 201940  size=1708
+[Mon Aug 17 14:54:59 2026] fw download complete
+
+[Mon Aug 17 14:54:59 2026] aic_load_firmware :firmware path = /lib/firmware/aic8800/usb/fw_patch_8800d80_u02.bin
+[Mon Aug 17 14:54:59 2026] file md5:a253bc880de32539b6c29435ed66e895
+[Mon Aug 17 14:54:59 2026] ### Upload fw_patch_8800d80_u02.bin firmware, @ = 1e0000  size=25300
+[Mon Aug 17 14:54:59 2026] fw download complete
+
+[Mon Aug 17 14:54:59 2026] aicbt_patch_table_load bt btmode[4]:5
+[Mon Aug 17 14:54:59 2026] aicbt_patch_table_load bt btport[4]:1
+[Mon Aug 17 14:54:59 2026] aicbt_patch_table_load bt uart_baud[4]:1500000
+[Mon Aug 17 14:54:59 2026] aicbt_patch_table_load bt uart_flowctrl[4]:1
+[Mon Aug 17 14:54:59 2026] aicbt_patch_table_load bt lpm_enable[4]:0
+[Mon Aug 17 14:54:59 2026] aicbt_patch_table_load bt tx_pwr[4]:6F2F
+[Mon Aug 17 14:54:59 2026] patch version - Dec 05 2023 15:53:41 - git 487f432
+[Mon Aug 17 14:54:59 2026] aic_load_firmware :firmware path = /lib/firmware/aic8800/usb/fmacfw_8800d80_u02.bin
+[Mon Aug 17 14:54:59 2026] file md5:4ae7c59beaa81bcfeeb4e4482bf769eb
+[Mon Aug 17 14:54:59 2026] ### Upload fmacfw_8800d80_u02.bin firmware, @ = 120000  size=327037
+[Mon Aug 17 14:55:01 2026] fw download complete
+
+[Mon Aug 17 14:55:01 2026] AICWFDBG(LOGERROR)	Read FW mem: 00120198
+[Mon Aug 17 14:55:01 2026] AICWFDBG(LOGERROR)	120198=183214
+[Mon Aug 17 14:55:01 2026] AICWFDBG(LOGERROR)	1201a0=170000
+[Mon Aug 17 14:55:01 2026] app_cmp
+[Mon Aug 17 14:55:01 2026] app_cmp
+[Mon Aug 17 14:55:01 2026] app_cmp
+[Mon Aug 17 14:55:01 2026] app_cmp
+[Mon Aug 17 14:55:01 2026] app_cmp
+[Mon Aug 17 14:55:01 2026] usb 1-1.4: USB disconnect, device number 4
+[Mon Aug 17 14:55:01 2026] app_cmp
+[Mon Aug 17 14:55:01 2026] aicwf_usb_disconnect enter
+[Mon Aug 17 14:55:01 2026] aicwf_bus_deinit
+[Mon Aug 17 14:55:02 2026] q_sz/max:  0 /  8 - next tkn: 456
+[Mon Aug 17 14:55:02 2026] q_sz/max:  0 /  8 - next tkn: 456
+[Mon Aug 17 14:55:02 2026] usb bustx thread will to stop
+[Mon Aug 17 14:55:02 2026] usb bustx thread stop
+[Mon Aug 17 14:55:02 2026] exit aicwf_bus_deinit
+[Mon Aug 17 14:55:02 2026] usb busrx thread will to stop
+[Mon Aug 17 14:55:02 2026] usb busrx thread stop
+[Mon Aug 17 14:55:02 2026] usb 1-1.4: new high-speed USB device number 5 using xhci_hcd
+[Mon Aug 17 14:55:02 2026] usb 1-1.4: New USB device found, idVendor=a69c, idProduct=8d81, bcdDevice= 1.00
+[Mon Aug 17 14:55:02 2026] usb 1-1.4: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+[Mon Aug 17 14:55:02 2026] usb 1-1.4: Product: AIC 8800D80
+[Mon Aug 17 14:55:02 2026] usb 1-1.4: Manufacturer: AICSemi
+[Mon Aug 17 14:55:02 2026] usb 1-1.4: SerialNumber: 20220103
+[Mon Aug 17 14:55:02 2026] AICWFDBG(LOGINFO)	aicwf_usb_probe vid:0xA69C pid:0x8D81 icl:0x0 isc:0x0 ipr:0x0
+[Mon Aug 17 14:55:02 2026] aic_load_fw 1-1.4:1.0: probe with driver aic_load_fw failed with error -1
+[Mon Aug 17 14:55:02 2026] AICWFDBG(LOGINFO)	aicwf_usb_probe vid:0xA69C pid:0x8D81 icl:0x0 isc:0x0 ipr:0x0
+[Mon Aug 17 14:55:02 2026] aic_load_fw 1-1.4:1.2: probe with driver aic_load_fw failed with error -1
+[Mon Aug 17 14:55:02 2026] AICWFDBG(LOGINFO)	aicwf_usb_chipmatch USE AIC8800D81
+[Mon Aug 17 14:55:02 2026] AICWFDBG(LOGINFO)	aicwf_parse_usb endpoints = 3
+[Mon Aug 17 14:55:02 2026] AICWFDBG(LOGINFO)	No RX Msg (in) Bulk EP found
+[Mon Aug 17 14:55:02 2026] AICWFDBG(LOGINFO)	Aic high speed USB device detected
+[Mon Aug 17 14:55:02 2026] AICWFDBG(LOGINFO)	aicwf_usb_alloc_rx_urb AICWF_USB_RX_URBS:20
+[Mon Aug 17 14:55:02 2026] AICWFDBG(LOGINFO)	aicwf_usb_alloc_tx_urb AICWF_USB_TX_URBS:200
+[Mon Aug 17 14:55:02 2026] AICWFDBG(LOGINFO)	aicwf_bus_init waiting for rx/tx thread init finish
+[Mon Aug 17 14:55:02 2026] AICWFDBG(LOGINFO)	rwnx_platform_init rwnx_cfg80211_init enter
+[Mon Aug 17 14:55:02 2026] AICWFDBG(LOGINFO)	rwnx_cfg80211_init sizeof(struct rwnx_hw):20568
+[Mon Aug 17 14:55:02 2026] AICWFDBG(LOGINFO)	rwnx_cfg80211_init: FILTER_TCP_ACK
+[Mon Aug 17 14:55:02 2026] ========== tcp ack debug tcp_ack_init
+[Mon Aug 17 14:55:02 2026] AICWFDBG(LOGINFO)	aicusb_prealloc_txq_alloc size is diff will to be kzalloc
+[Mon Aug 17 14:55:02 2026] AICWFDBG(LOGINFO)	aicusb_prealloc_txq_alloc txq kzalloc successful
+[Mon Aug 17 14:55:02 2026] AICWFDBG(LOGINFO)	chip_id=7, chip_mcu_id = 1
+[Mon Aug 17 14:55:02 2026] AICWFDBG(LOGINFO)	userconfig file path:aic_userconfig_8800d80.txt
+[Mon Aug 17 14:55:02 2026] AICWFDBG(LOGINFO)	### Load file aic_userconfig_8800d80.txt
+[Mon Aug 17 14:55:02 2026] AICWFDBG(LOGINFO)	rwnx_load_firmware :firmware path = /lib/firmware/aic8800/usb/aic_userconfig_8800d80.txt
+[Mon Aug 17 14:55:02 2026] AICWFDBG(LOGINFO)	file md5:2c9d3ab6e42c03bd2adb9f9e2b6180f2
+[Mon Aug 17 14:55:02 2026] AICWFDBG(LOGINFO)	### Load file done: aic_userconfig_8800d80.txt, size=2448
+[Mon Aug 17 14:55:02 2026] AICWFDBG(LOGINFO)	rwnx_plat_userconfig_parsing: AIC USERCONFIG 2022/0803/1707
+[Mon Aug 17 14:55:02 2026] AICWFDBG(LOGINFO)	rwnx_plat_userconfig_parsing: txpwr_lvl
+[Mon Aug 17 14:55:02 2026] AICWFDBG(LOGINFO)	rwnx_plat_userconfig_parsing: txpwr_loss
+[Mon Aug 17 14:55:02 2026] AICWFDBG(LOGERROR)	invalid cmd: loss_enable
+[Mon Aug 17 14:55:02 2026] AICWFDBG(LOGERROR)	invalid cmd: loss_value
+[Mon Aug 17 14:55:02 2026] AICWFDBG(LOGINFO)	rwnx_plat_userconfig_parsing: txpwr_ofst
+[Mon Aug 17 14:55:02 2026] AICWFDBG(LOGINFO)	rwnx_plat_userconfig_parsing: xtal cap
+[Mon Aug 17 14:55:02 2026] AICWFDBG(LOGINFO)	userconfig download complete
+
+[Mon Aug 17 14:55:02 2026] AICWFDBG(LOGINFO)	is 5g support = 1, vendor_info = 0x00
+[Mon Aug 17 14:55:02 2026] AICWFDBG(LOGINFO)	Firmware Version: zh Dec 29 2023 16:46:29 - gf876b0f
+[Mon Aug 17 14:55:03 2026] AICWFDBG(LOGINFO)	get macaddr:8c,a0
+[Mon Aug 17 14:55:03 2026] AICWFDBG(LOGINFO)	DFS: radar st = 0
+[Mon Aug 17 14:55:03 2026] AICWFDBG(LOGINFO)	HT supp 1, VHT supp 1, HE supp 1
+[Mon Aug 17 14:55:03 2026] AICWFDBG(LOGINFO)	rwnx_reg_notifier
+[Mon Aug 17 14:55:03 2026] AICWFDBG(LOGINFO)	rwnx_radar_set_domain
+[Mon Aug 17 14:55:03 2026] AICWFDBG(LOGINFO)	set_region 1
+[Mon Aug 17 14:55:03 2026] AICWFDBG(LOGINFO)	set_region 1
+[Mon Aug 17 14:55:03 2026] AICWFDBG(LOGINFO)	getRegdomainFromRwnxDB set ccode:00
+[Mon Aug 17 14:55:03 2026] AICWFDBG(LOGINFO)	rwnx_get_countrycode_channels support channel:1 2 3 4 5 6 7 8 9 10 11 12 13 14 36 40 44 48 52 56 60 64 100 104 108 112 116 120 124 128 132 136 140 144 149 153 157 161 165
+[Mon Aug 17 14:55:03 2026] ieee80211 phy1:
+                           *******************************************************
+                           ** CAUTION: USING PERMISSIVE CUSTOM REGULATORY RULES **
+                           *******************************************************
+[Mon Aug 17 14:55:03 2026] AICWFDBG(LOGINFO)	rwnx_interface_add: wlan%d, 2, 10
+[Mon Aug 17 14:55:03 2026] AICWFDBG(LOGINFO)	interface add:8c ff ff 00 00 00
+[Mon Aug 17 14:55:03 2026] AICWFDBG(LOGINFO)	New interface create wlan1
+[Mon Aug 17 14:55:03 2026] AICWFDBG(LOGINFO)	rwnx_platform_init rwnx_cfg80211_init exit
