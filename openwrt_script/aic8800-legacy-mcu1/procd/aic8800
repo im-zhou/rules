@@ -1,0 +1,81 @@
+#!/bin/sh /etc/rc.common
+
+# 开机后检查一次所有 Wi-Fi 设备，只对未处于 up 状态的设备分别执行一次 down/up
+
+START=99
+STOP=10
+USE_PROCD=1
+
+SERVICE_NAME="aic8800"
+
+. /usr/share/libubox/jshn.sh
+
+log_msg() {
+	logger -t "$SERVICE_NAME" "$*"
+}
+
+run_once() {
+	local status devices device is_up device_json reload_devices
+
+	status="$(ubus call network.wireless status 2>/dev/null)" || {
+		log_msg "failed to get wireless status; nothing was changed"
+		return 1
+	}
+
+	json_load "$status" || {
+		log_msg "failed to parse wireless status; nothing was changed"
+		return 1
+	}
+
+	json_get_keys devices
+	if [ -z "$devices" ]; then
+		log_msg "no Wi-Fi devices found; nothing was changed"
+		return 0
+	fi
+
+	reload_devices=""
+	for device in $devices; do
+		json_select "$device"
+		json_get_var is_up up
+		json_select ..
+
+		if [ "$is_up" != "1" ]; then
+			reload_devices="$reload_devices $device"
+		fi
+	done
+
+	if [ -z "$reload_devices" ]; then
+		log_msg "all Wi-Fi devices are up; nothing was changed"
+		return 0
+	fi
+
+	for device in $reload_devices; do
+		device_json="{\"device\":\"$device\"}"
+		log_msg "$device is not up; restarting it"
+		ubus call network.wireless down "$device_json" >/dev/null 2>&1 || \
+			log_msg "$device down command failed"
+	done
+
+	sleep 1
+
+	for device in $reload_devices; do
+		device_json="{\"device\":\"$device\"}"
+		if ubus call network.wireless up "$device_json" >/dev/null 2>&1; then
+			log_msg "$device down/up completed"
+		else
+			log_msg "$device up command failed"
+		fi
+	done
+}
+
+start_service() {
+	procd_open_instance
+	procd_set_param command /etc/init.d/aic8800 run_once
+	procd_set_param stdout 1
+	procd_set_param stderr 1
+	procd_set_param term_timeout 2
+	procd_close_instance
+}
+
+EXTRA_COMMANDS="run_once"
+EXTRA_HELP="\trun_once\tRun the delayed one-time Wi-Fi status check"
