@@ -1,12 +1,14 @@
 #!/bin/sh /etc/rc.common
 
-# 开机后检查一次所有 Wi-Fi 设备，只对未处于 up 状态的设备分别执行一次 down/up
+# 开机15秒后检查一次所有 Wi-Fi 设备
+# 对未处于 up 状态的设备分别执行一次 down/up
 
-START=99
+START=77
 STOP=10
 USE_PROCD=1
 
 SERVICE_NAME="aic8800"
+START_DELAY=15
 
 . /usr/share/libubox/jshn.sh
 
@@ -16,6 +18,8 @@ log_msg() {
 
 run_once() {
 	local status devices device is_up device_json reload_devices
+
+	sleep "$START_DELAY"
 
 	status="$(ubus call network.wireless status 2>/dev/null)" || {
 		log_msg "failed to get wireless status; nothing was changed"
