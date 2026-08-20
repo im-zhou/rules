@@ -82,4 +82,5 @@ export ASNLIST=(
   "AS137872"  # China Mobile Hong Kong Company Limited
   "AS9231"    # China Mobile Hong Kong Company Limited
   "AS20473"   # Vultr
+  "AS50118"   # Caribbean Telecom S.A
 )
