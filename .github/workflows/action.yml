@@ -5,9 +5,10 @@ permissions:
   actions: write
 
 on:
-  schedule:
-    - cron: "0 23 * * *" # 7:00 AM UTC+8
   workflow_dispatch:
+  schedule:
+    - cron: "17 7 * * *"
+      timezone: "Asia/Shanghai"
 
 jobs:
   build:
