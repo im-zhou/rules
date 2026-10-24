@@ -42,6 +42,7 @@ export ASNLIST=(
   "AS4760"    # HKT
   "AS3491"    # PCCW
   "AS9908"    # iCable
+  "AS9304"    # HGC
   "AS31898"   # OCI
   "AS138997"  # Eons Data Communications Limited
   "AS8796"    # FASTNET DATA INC
