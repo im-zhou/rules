@@ -53,6 +53,7 @@ export ASNLIST=(
   "AS152111"  # CTCSCI TECH LIMITED
   "AS152112"  # CTCSCI TECH LIMITED
   "AS153517"  # Ju Link Tech Limited
+  "AS133478"  # Tencent Cloud Computing (Beijing) Co., Ltd
   "AS979"     # NetLab
   "AS139358"  # Kansuiun Co., Ltd
   "AS17433"   # Hytron
@@ -78,11 +79,11 @@ export ASNLIST=(
   "AS36352"   # HostPapa(CCS)
   "AS36149"   # Hawaiian Telcom
   "AS61112"   # AKILE
-  "AS402279"  # Wawo
+  "AS402279"  # Geoscry Network LLC (Wawo)
   "AS131642"  # PQS
   "AS137872"  # China Mobile Hong Kong Company Limited
   "AS9231"    # China Mobile Hong Kong Company Limited
   "AS20473"   # Vultr
   "AS50118"   # Caribbean Telecom S.A
-  "AS152918"  # Liberally Network LLC
+  "AS152918"  # Liberally Network LLC (Wawo)
 )

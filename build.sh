@@ -76,8 +76,11 @@ done
 
 echo "Step: dedupe"
 sort -u domain_group.list -o dist/domain_group.list
-sort -u ipcidr_group.list -o dist/ipcidr_group.list
 sort -u domain_funny.list -o dist/domain_funny.list
+
+echo "Step: Exclude IP ranges"
+# Subtract CIDR ranges before producing either ipcidr_group output format.
+go run -C geoip ./ convert -c ../ipcidr-filter.json
 
 echo "Step: convert to mrs"
 ./mihomo convert-ruleset domain text dist/domain_funny.list dist/domain_funny.mrs

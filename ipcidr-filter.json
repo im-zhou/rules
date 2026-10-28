@@ -1,0 +1,31 @@
+{
+  "input": [
+    {
+      "type": "text",
+      "action": "add",
+      "args": {
+        "name": "ipcidr_group",
+        "uri": "../ipcidr_group.list"
+      }
+    },
+    {
+      "type": "text",
+      "action": "remove",
+      "args": {
+        "name": "ipcidr_group",
+        "uri": "../exclude.list"
+      }
+    }
+  ],
+  "output": [
+    {
+      "type": "text",
+      "action": "output",
+      "args": {
+        "outputDir": "../dist",
+        "outputExtension": ".list",
+        "wantedList": ["ipcidr_group"]
+      }
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+# CIDRs excluded from ipcidr_group.list and ipcidr_group.mrs.
+# One IPv4 or IPv6 CIDR per line; blank lines and # comments are allowed.
+# Applied after merging ASNLIST, regardless of the originating ASN.
+45.248.8.0/22   # Jangsu Bangrun Network Technology Co.,Ltd.
+103.60.164.0/24 # Jangsu Bangrun Network Technology Co.,Ltd.
