@@ -79,11 +79,12 @@ export ASNLIST=(
   "AS36352"   # HostPapa(CCS)
   "AS36149"   # Hawaiian Telcom
   "AS61112"   # AKILE
-  "AS402279"  # Geoscry Network LLC (Wawo)
   "AS131642"  # PQS
   "AS137872"  # China Mobile Hong Kong Company Limited
   "AS9231"    # China Mobile Hong Kong Company Limited
   "AS20473"   # Vultr
   "AS50118"   # Caribbean Telecom S.A
-  "AS152918"  # Liberally Network LLC (Wawo)
+  "AS402279"  # Geoscry Network LLC
+  "AS152918"  # Liberally Network LLC
+  "AS14315"   # 1GSERVERS, LLC
 )
