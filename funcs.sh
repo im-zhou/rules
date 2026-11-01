@@ -40,35 +40,44 @@ function download_mihomo() {
 }
 
 function buildGeoASN() {
-echo ">>> generate geoasn.json"
-cat > geoasn.json <<EOF
-{
-  "input": [
-EOF
-FIRST=1
-#
-# ASN -> DAT 分集
-#
-for asn in "${ASNLIST[@]}"; do
-  FILE="dist/meta/asn/${asn}.list"
-  [ -f "$FILE" ] || continue
-  NAME=$(echo "$asn" | tr '[:upper:]' '[:lower:]')
-  if [ $FIRST -eq 0 ]; then
-    echo "," >> geoasn.json
-  fi
-  FIRST=0
-  cat >> geoasn.json <<EOF
-{
-  "type": "text",
-  "action": "add",
-  "args": {
-    "name": "$NAME",
-    "uri": "../$FILE"
-  }
-}
-EOF
-done
-cat >> geoasn.json <<EOF
+    local asn_dir="dist/meta/asn"
+    local file base number name
+    local first=1
+    local -a asn_files=()
+    if [[ ! -d "$asn_dir" ]]; then
+        echo "[ERROR] ASN directory not found: $asn_dir" >&2
+        return 1
+    fi
+    for file in "$asn_dir"/AS*.list; do
+        [[ -f "$file" && -s "$file" ]] || continue
+        base="${file##*/}"
+        [[ "$base" =~ ^AS([1-9][0-9]{0,9})\.list$ ]] || continue
+        number="${BASH_REMATCH[1]}"
+        # Exclude AS0, non-canonical filenames, and values outside ASN space.
+        # 4294967295 is reserved and must not be used as an ASN.
+        (( number <= 4294967294 )) || continue
+        asn_files+=("$file")
+    done
+    if (( ${#asn_files[@]} == 0 )); then
+        echo "[ERROR] No valid non-empty ASN lists found in $asn_dir" >&2
+        return 1
+    fi
+    echo ">>> generate geoasn.json (${#asn_files[@]} ASN lists)"
+    {
+        printf '{\n  "input": [\n'
+        for file in "${asn_files[@]}"; do
+            base="${file##*/}"
+            name="${base%.list}"
+            name="${name,,}"
+            if (( first )); then
+                first=0
+            else
+                printf ',\n'
+            fi
+            printf '    {\n      "type": "text",\n      "action": "add",\n      "args": {\n        "name": "%s",\n        "uri": "../%s"\n      }\n    }' "$name" "$file"
+        done
+        printf '\n'
+        cat <<'EOF'
   ],
   "output": [
     {
@@ -82,7 +91,8 @@ cat >> geoasn.json <<EOF
   ]
 }
 EOF
-go run -C geoip ./ convert -c ../geoasn.json
+    } > geoasn.json
+    go run -C geoip ./ convert -c ../geoasn.json
 }
 
 function buildGeoEU() {
